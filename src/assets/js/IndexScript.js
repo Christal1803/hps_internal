@@ -1,4 +1,5 @@
-// 'use-strict';
+function IndexScript() {
+    // 'use-strict';
 
 // House Card Modals
 const dropdownBtns = document.querySelectorAll('.search__dropwdown-link');
@@ -71,3 +72,6 @@ function showHideTabs(tabButtons, tabs) {
 
     })
 }
+}
+
+export default IndexScript

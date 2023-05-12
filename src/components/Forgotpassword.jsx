@@ -5,6 +5,8 @@ import envelopeicon from "../assets/images/auth/envelope-icon.svg";
 import logo from "../assets/images/auth/logo.svg";
 import { createClient } from "@supabase/supabase-js";
 
+
+
 function Forgotpassword() {
   //page redirect function
   let navigate = useNavigate();
