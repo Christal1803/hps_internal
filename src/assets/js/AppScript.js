@@ -1,4 +1,7 @@
-// 'use-strict';
+import React from "react";
+
+function AppScript() {
+  // 'use-strict';
 
 // Toggle Dropdown
 const dropdownBtn = document.querySelector('.search__dropwdown-btn');
@@ -62,3 +65,9 @@ circleToggle.addEventListener('click', () => {
   }
 
 });
+}
+
+export default AppScript;
+
+
+
