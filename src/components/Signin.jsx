@@ -50,9 +50,19 @@ function Signin() {
     if (error) {
       console.log("something went wrong");
     } else {
-      console.log(data);
-      console.log(session);
-      navigate("/dashboard");
+    let { data: Member, error } = await supabase
+  .from('Member')
+  .select('school_id')
+  .eq('user_id', data.user.id)
+  .order('lastlogin_date', { ascending: false });
+  ;
+  sessionStorage.setItem("school_id", Member[0].school_id);
+  if (error) {
+    console.log(error);
+    return [];
+  }
+  navigate("/dashboard");
+  return data;
     }
   };
 
