@@ -241,6 +241,23 @@ function Dashboard() {
                       <span>Adjust Points For Multiple Houses</span>
                     </button>
                   </li>
+
+                  <li class="search__dropwdown-item">
+                    <button
+                      type="button"
+                      class="search__dropwdown-link"
+                      data-id="select-schools-modal" onClick={IndexScript}
+                    >
+                      <img
+                        src={check}
+                        class="search__dropwdown-icon"
+                        alt="Check icon"
+                      />
+                      <span>Select schools</span>
+                    </button>
+                  </li>
+
+
                   <li class="search__dropwdown-item">
                     <button
                       type="button"
@@ -548,6 +565,76 @@ function Dashboard() {
         {/* <!-- ================ Ognisko Modal Start ================== --> */}
 
 
+        {/* <!-- ================ Select schools Modal Start ================== --> */}
+        <div class="backdrop select-schools-modal">
+          <div class="modal">
+            <div class="modal__header">
+              <img
+                src={ognisko}
+                class="modal__header-image"
+                alt="ognisko image"
+              />
+              <button
+                type="button"
+                class="modal__header-btn"
+                data-toggle="select-schools-modal"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M1.94663 16.6131L8.24543 9.99935L1.94663 3.38561C1.53063 2.94881 1.58684 2.29121 2.07217 1.91681C2.5575 1.54241 3.28816 1.593 3.70416 2.02979L10.0013 8.64179L16.2984 2.02979C16.7144 1.593 17.4451 1.54241 17.9304 1.91681C18.4158 2.29121 18.472 2.94881 18.056 3.38561L11.7572 9.99935L18.056 16.6131C18.472 17.0499 18.4158 17.7075 17.9304 18.0819C17.4451 18.4563 16.7144 18.4057 16.2984 17.9689L10.0013 11.3569L3.70416 17.9689C3.28816 18.4057 2.5575 18.4563 2.07217 18.0819C1.58684 17.7075 1.53063 17.0499 1.94663 16.6131Z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div class="modal__body">
+              <div class="points__current">
+                <h2 class="text-center">Select School</h2>
+              </div>
+
+              <form class="addpoints">
+                <div class="addpoints__tabs">
+                  <div class="addpoints__tabs-content">
+                    <div class="addpoints__tabs-tab ognisko-add-points-tab active ognisko-tab-content">
+                      <div class="select__slider-container no-scrollbar">
+                        <div class="select__slider">
+                          <div class="select__slider-item ">
+                            <p>Addant School 1</p>
+                          </div>
+                          <div class="select__slider-item active">
+                            <p>Addant School 2</p>
+                          </div>
+                          <div class="select__slider-item ">
+                            <p>Addant School 3</p>
+                          </div>
+                          <div class="select__slider-item">
+                            <p>Addant School 4</p>
+                          </div>
+                          <div class="select__slider-item">
+                            <p>Addant School 5</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                   
+                  </div>
+                </div>
+                
+              </form>
+            </div>
+          </div>
+        </div>
+        {/* <!-- ================ Select schools Modal Start ================== --> */}
+
+
         {/* <!-- ================ Multiple Points Modal Start ================ --> */}
         <div class="backdrop multi-points-modal">
             <div class="modal">
@@ -844,6 +931,9 @@ function Dashboard() {
             </div>
         </div>
         {/* <!-- ================ Multiple Points Modal End ================== --> */}
+
+
+        
       </div>
     </div>
   );
