@@ -3,6 +3,8 @@ import { useNavigate } from "react-router";
 import mailicon from "../assets/images/auth/mail-icon.svg";
 import logo from "../assets/images/auth/logo.svg";
 import lockicon from "../assets/images/auth/lock-icon.svg";
+import eye from "../assets/images/auth/eye.svg";
+import eyeslash from "../assets/images/auth/eyeslash.svg";
 import { createClient } from "@supabase/supabase-js";
 import { useState } from "react";
 
@@ -27,6 +29,7 @@ function Resetpassword() {
       email: mail,
       password: confirmPassword,
     });
+    
     if (error) {
       console.log("something went wrong");
       setErrorMessage("An error occurred. Please try again later.");
@@ -36,6 +39,46 @@ function Resetpassword() {
       navigate("/signin");
     }
   };
+
+  //password toggle
+  const [showPassword, setShowPassword] = useState(false);
+  const [imageSource, setImageSource] = useState(eye);
+  const handleClick = () => {
+    debugger
+    console.log(showPassword)
+    if (imageSource === eye) {
+      setImageSource(eyeslash);
+      setShowPassword(!showPassword);
+    } else {
+      setImageSource(eye);
+      setShowPassword(!showPassword);
+    }
+  };
+
+  //passwordvalidation
+  const [passwordError, setPasswordError] = useState('');
+  const handleConfirmPassword = () => {
+debugger
+    if (newPassword !== confirmPassword) {
+      debugger
+      setPasswordError('Passwords do not match');
+    } else {
+      debugger
+      setPasswordError('match');
+      // Perform further actions, such as submitting the form
+    }
+  };
+
+  const handletwofunctions = (e) => {
+    debugger
+    setConfirmPassword(e.target.value)
+    console.log(setConfirmPassword)
+    handleConfirmPassword()
+  };
+
+
+
+
 
   return (
     <div className="login">
@@ -70,12 +113,12 @@ function Resetpassword() {
               {/* <!-- Row 2 --> */}
               <div className="login__form-row forgot-row">
                 <img src={lockicon} className="login__form-icon" alt="icon" />
-                <input value={confirmPassword} type="text" placeholder="confirm new password" onChange={(e) => setConfirmPassword(e.target.value)} id="confirmpassword" />
+                <img src={imageSource} className="login__form-eye fa fa-eye" alt="icon" onClick={handleClick}/>
+                <input value={confirmPassword} onChange={handletwofunctions} type={showPassword ? 'text' : 'password'} id="confirmpassword" placeholder="confirm new password"/>
               </div>
 
               <div className="login__form-text">
-                <span>{successMessage && <p>{successMessage}</p>}</span>
-                <span>{errorMessage && <p>{errorMessage}</p>}</span>
+                <span>{passwordError && <p>{passwordError}</p>}</span>
               </div>
 
               <div className="login__form-links">
