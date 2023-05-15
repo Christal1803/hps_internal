@@ -1751,7 +1751,7 @@ display: none;
   line-height: 24px;
   color: #9C9EB9;
   letter-spacing: 0.02em;
-  padding: 17px 20px;
+  padding: 17px 50px;
   padding-left: 61px;
 }
 
@@ -1854,6 +1854,11 @@ display: none;
       top: 15px;
       max-width: 13px;
       height: auto;
+  }
+  .login__form-eye {
+    position: absolute;
+    right: 21px;
+    top: 12px !important;
   }
   .login__form-btn {
       width: 200px;
@@ -4607,4 +4612,10 @@ img.card-img-top.school-badge.img-fluid {
 
 .danger {
   color: red;
+}
+
+.login__form-eye {
+  position: absolute;
+  right: 21px;
+  top: 18px;
 }

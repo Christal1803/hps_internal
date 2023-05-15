@@ -4,6 +4,8 @@ import envelopeicon from "../assets/images/auth/envelope-icon.svg";
 import lockicon from "../assets/images/auth/lock-icon.svg";
 import googleicon from "../assets/images/auth/google-icon.svg";
 import booksicon from "../assets/images/auth/books-icon.svg";
+import eye from "../assets/images/auth/eye.svg";
+import eyeslash from "../assets/images/auth/eyeslash.svg";
 import logo from "../assets/images/auth/logo.svg";
 import { createClient } from "@supabase/supabase-js";
 
@@ -38,6 +40,7 @@ function Signin() {
   //Login with email & password
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
   const handleLoginEmail = async (event) => {
     console.log(email);
     console.log(password);
@@ -49,6 +52,7 @@ function Signin() {
     });
     if (error) {
       console.log("something went wrong");
+      setMessage(`Invalid credentials`);
     } else {
     let { data: Member, error } = await supabase
   .from('Member')
@@ -59,10 +63,26 @@ function Signin() {
   sessionStorage.setItem("school_id", Member[0].school_id);
   if (error) {
     console.log(error);
+    
     return [];
   }
   navigate("/dashboard");
   return data;
+    }
+  };
+
+  //password toggle
+  const [showPassword, setShowPassword] = useState(false);
+  const [imageSource, setImageSource] = useState(eye);
+  const handleClick = () => {
+    debugger
+    console.log(showPassword)
+    if (imageSource === eye) {
+      setImageSource(eyeslash);
+      setShowPassword(!showPassword);
+    } else {
+      setImageSource(eye);
+      setShowPassword(!showPassword);
     }
   };
 
@@ -100,9 +120,17 @@ function Signin() {
               {/* <!-- Row 3 --> */}
               <div className="login__form-row">
                 <img src={lockicon} className="login__form-icon" alt="icon" />
-                <input value={password} onChange={(e) => setPassword(e.target.value)} type="text" id="password" placeholder="password"/>
+                <img src={imageSource} className="login__form-eye fa fa-eye" alt="icon" onClick={handleClick}/>
+                <input value={password} onChange={(e) => setPassword(e.target.value)} type={showPassword ? 'text' : 'password'} id="password" placeholder="password"/>
               </div>
+
               {/* <!-- Row 3 --> */}
+
+
+              <div className="login__form-text">
+              <span>{message && <p className="danger">{message}</p>}</span>
+              </div>
+             
 
               <div className="login__form-links">
                 <a onClick={MovetoForgotpassword} className="login__form-link">Forgot Password or School ID</a>
