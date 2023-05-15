@@ -28,12 +28,20 @@ function Dashboard() {
     myFunction();
   }, []);
   async function myFunction() {
-    window.tableRows = "";
-    const school_id = sessionStorage.getItem("school_id");
+      window.tableRows = "";
+
+      const school_id = sessionStorage.getItem("school_id");
+      let { data: School } = await supabase
+          .from('School')
+          .select('school_name')
+          .eq("school_id", school_id);
+      console.log(School);
+      window.schoolName = School[0].school_name;
     let { data: House, error } = await supabase
       .from("House")
       .select("*")
-      .eq("school_id", school_id);
+        .eq("school_id", school_id)
+        .eq("active", 'TRUE');
     if (House.length == 0) {
       setLoading(true);
       window.tableRows = "no houses are found";
@@ -62,7 +70,9 @@ function Dashboard() {
       inputElement.click()
       setLoading(false);
     } 
-  
+      if (error) {
+          console.log("error occured")
+      }
   }
 
   //page redirect function
@@ -281,22 +291,8 @@ function Dashboard() {
           {/* <!-- ================ Houses Start ================== --> */}
           <section class="houses">
             <div class="houses-wrapper">
-              <h3 class="text-center houses-title">Houses</h3>
+                          <h3 class="text-center houses-title">{window.schoolName} - Houses</h3>
               <div class="houses__cards">
-                {/* <!-- Card 1 --> */}
-                {/* <div class="houses__card" data-id="ognisko-modal">
-                  <div class="houses__card-image">
-                    <img src={ognisko} alt="Ognisko" />
-                    <div class="houses__card-shadow"></div>
-                  </div>
-                  <div class="houses__card-footer">
-                    <div class="houses__card-count">
-                      <img src={crown} alt="Crown icon" />
-                      <p>456,000</p>
-                    </div>
-                  </div>
-                </div> */}
-
                 {window.tableRows}
               </div>
             </div>

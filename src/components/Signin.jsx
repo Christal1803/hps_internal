@@ -42,27 +42,39 @@ function Signin() {
     console.log(email);
     console.log(password);
     event.preventDefault();
-    debugger;
-    let { data, error, session } = await supabase.auth.signInWithPassword({
+    let { data, error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
     });
     if (error) {
-      console.log("something went wrong");
+      console.log("Invaid Credentials");
     } else {
     let { data: Member, error } = await supabase
   .from('Member')
   .select('school_id')
   .eq('user_id', data.user.id)
   .order('lastlogin_date', { ascending: false });
-  ;
+        ;
+        sessionStorage.setItem("user_id", data.user.id);
   sessionStorage.setItem("school_id", Member[0].school_id);
-  if (error) {
-    console.log(error);
-    return [];
-  }
-  navigate("/dashboard");
-  return data;
+        if (error) {
+            console.log(error);
+            return [];
+        }
+        else {
+            await supabase
+                .from('Member')
+                .update({ lastlogin_date: new Date() })
+                .eq('user_id', data.user.id)
+                .eq('school_id', Member[0].school_id)
+                .then(response => {
+                    console.log('Update successful:', response);
+                   
+                })
+            
+            navigate("/dashboard");
+            return data;
+        }  
     }
   };
 
