@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { createClient } from "@supabase/supabase-js";
 import logo from "../assets/images/dashboard/logo.svg";
@@ -9,15 +8,12 @@ import dotsicon from "../assets/images/dashboard/dots-icon.svg";
 import check from "../assets/images/dashboard/check.svg";
 import reset from "../assets/images/dashboard/reset.svg";
 import ognisko from "../assets/images/dashboard/ognisko.png";
-import reveur from "../assets/images/dashboard/reveur.png";
-import hufflepuf from "../assets/images/dashboard/hufflepuf.png";
-import ubunto from "../assets/images/dashboard/ubunto.png";
-
 import AppScript from "../assets/js/AppScript";
 import IndexScript from "../assets/js/IndexScript";
+import { supabase } from "../supabase";
 
 function Setting() {
-  const [inputElement, setName] = useState('')
+  const [inputElement, setName] = useState("");
   //page redirect function
   let navigate = useNavigate();
   const MovetoNewsfeed = () => {
@@ -25,32 +21,24 @@ function Setting() {
     navigate(path);
   };
 
-
   //page redirect function
   const MovetoDashboard = () => {
     let path = `/dashboard`;
     navigate(path);
   };
 
-   //page redirect function
-   const Movetosettings = () => {
+  //page redirect function
+  const Movetosettings = () => {
     let path = `/dashboard`;
     navigate(path);
   };
-
-  // supabase credentials
-  const supabaseUrl = "https://zqydhjfofwxhvbagfwpg.supabase.co";
-  const supabaseKey =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpxeWRoamZvZnd4aHZiYWdmd3BnIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY3MzIwNjY1MiwiZXhwIjoxOTg4NzgyNjUyfQ.3xA7iglBkdpc1AHlnUEHUFz7GhlViqdrprxWO7W4ZTU";
-  const supabase = createClient(supabaseUrl, supabaseKey);
-  
 
   //logout function
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
   const history = useNavigate();
   async function handleLogout() {
-    debugger
+    debugger;
     try {
       setLoading(true);
       await supabase.auth.signOut();
@@ -62,7 +50,7 @@ function Setting() {
       setLoading(false);
     }
   }
- 
+
   return (
     <div className="body">
       <div class="layout">
@@ -141,8 +129,10 @@ function Setting() {
                   </a>
                 </li>
 
-                <li class="sidebar__menu-item" >
-                  <button id="dark-light-mode" onClick={AppScript}>Dark mode</button>
+                <li class="sidebar__menu-item">
+                  <button id="dark-light-mode" onClick={AppScript}>
+                    Dark mode
+                  </button>
                 </li>
               </ul>
             </nav>
@@ -163,7 +153,11 @@ function Setting() {
           <section class="search home-search">
             <h3>Houses</h3>
             <div class="search__dropwdown">
-              <button type="button" class="search__dropwdown-btn" onClick={AppScript}>
+              <button
+                type="button"
+                class="search__dropwdown-btn"
+                onClick={AppScript}
+              >
                 <img src={dotsicon} alt="Dots icon" />
               </button>
               <div class="search__dropwdown-dropwdown">
@@ -194,7 +188,8 @@ function Setting() {
                     <button
                       type="button"
                       class="search__dropwdown-link"
-                      data-id="multi-points-modal" onClick={IndexScript}
+                      data-id="multi-points-modal"
+                      onClick={IndexScript}
                     >
                       <img
                         src={check}
@@ -209,7 +204,8 @@ function Setting() {
                     <button
                       type="button"
                       class="search__dropwdown-link"
-                      data-id="select-schools-modal" onClick={IndexScript}
+                      data-id="select-schools-modal"
+                      onClick={IndexScript}
                     >
                       <img
                         src={check}
@@ -219,7 +215,6 @@ function Setting() {
                       <span>Select schools</span>
                     </button>
                   </li>
-
 
                   <li class="search__dropwdown-item">
                     <button
@@ -251,17 +246,17 @@ function Setting() {
                 <div class="houses__card" data-id="ognisko-modal">
                   <div class="houses__card-footer">
                     <div class="houses__card-count">
-                    <a onClick={handleLogout}>
+                      <a onClick={handleLogout}>
                         <img src={logouticon} alt="icon" />
                         <span>Log out</span>
-                    </a>
+                      </a>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </section>
-          
+
           {/* <!-- ================ Houses End ================== --> */}
         </main>
       </div>
@@ -525,7 +520,6 @@ function Setting() {
         </div>
         {/* <!-- ================ Ognisko Modal Start ================== --> */}
 
-
         {/* <!-- ================ Select schools Modal Start ================== --> */}
         <div class="backdrop select-schools-modal">
           <div class="modal">
@@ -585,316 +579,302 @@ function Setting() {
                         </div>
                       </div>
                     </div>
-                   
                   </div>
                 </div>
-                
               </form>
             </div>
           </div>
         </div>
         {/* <!-- ================ Select schools Modal Start ================== --> */}
 
-
         {/* <!-- ================ Multiple Points Modal Start ================ --> */}
         <div class="backdrop multi-points-modal">
-            <div class="modal">
-                <div class="modal__header">
-                    <h3>Multiple House Points</h3>
-                    <button
-                        type="button"
-                        class="modal__header-btn"
-                        data-toggle="multi-points-modal"
-                    >
-                        <svg
-                            width="20"
-                            height="20"
-                            viewBox="0 0 20 20"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                fill-rule="evenodd"
-                                clip-rule="evenodd"
-                                d="M1.94663 16.6131L8.24543 9.99935L1.94663 3.38561C1.53063 2.94881 1.58684 2.29121 2.07217 1.91681C2.5575 1.54241 3.28816 1.593 3.70416 2.02979L10.0013 8.64179L16.2984 2.02979C16.7144 1.593 17.4451 1.54241 17.9304 1.91681C18.4158 2.29121 18.472 2.94881 18.056 3.38561L11.7572 9.99935L18.056 16.6131C18.472 17.0499 18.4158 17.7075 17.9304 18.0819C17.4451 18.4563 16.7144 18.4057 16.2984 17.9689L10.0013 11.3569L3.70416 17.9689C3.28816 18.4057 2.5575 18.4563 2.07217 18.0819C1.58684 17.7075 1.53063 17.0499 1.94663 16.6131Z"
-                                fill="currentColor"
-                            />
-                        </svg>
-                    </button>
-                </div>
-                <div class="modal__body multi-points-body">
-                    <h2>Multiple House Points</h2>
-
-                    <form class="addpoints">
-                        <div class="addpoints__tabs">
-                            <div class="addpoints__tabs-header multi-points-tab-header">
-                                <button
-                                    type="button"
-                                    class="addpoints__tabs-btn active"
-                                    data-toggle="multi-add-points-tab"
-                                >
-                                    Add points
-                                </button>
-                                <button
-                                    type="button"
-                                    class="addpoints__tabs-btn subtract-btn"
-                                    data-toggle="multi-subtract-points-tab"
-                                >
-                                    Subtract points
-                                </button>
-                            </div>
-
-                            <div class="addpoints__tabs-content">
-                                <div
-                                    class="addpoints__tabs-tab multi-add-points-tab multi-points-tab-content active"
-                                >
-                                    <div class="addpoints__amount">
-                                        <p class="addpoints__amount-title">Select Amount</p>
-
-                                        <div class="addpoints__amount-slider-wrapper no-scrollbar">
-                                            <div class="addpoints__amount-slider">
-                                                <div class="addpoints__amount-item">
-                                                    <p>+100</p>
-                                                </div>
-                                                <div class="addpoints__amount-item active">
-                                                    <p>+200</p>
-                                                </div>
-                                                <div class="addpoints__amount-item">
-                                                    <p>+300</p>
-                                                </div>
-                                                <div class="addpoints__amount-item">
-                                                    <p>+400</p>
-                                                </div>
-                                                <div class="addpoints__amount-item">
-                                                    <p>+500</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="multiselect__slider-container no-scrollbar">
-                                        <div class="multiselect__slider">
-                                            <div class="multiselect__slider-item">
-                                                <input type="checkbox" id="add-all-house" />
-                                                <div class="multiselect__slider-square">
-                                                    <img
-                                                        src="./images/checkbox-icon.svg"
-                                                        alt="icon"
-                                                    />
-                                                </div>
-                                                <label for="add-all-house">All Houses</label>
-                                            </div>
-
-                                            <div class="multiselect__slider-item">
-                                                <input type="checkbox" id="add-1-house" checked />
-                                                <div class="multiselect__slider-square">
-                                                    <img
-                                                        src="./images/checkbox-icon.svg"
-                                                        alt="icon"
-                                                    />
-                                                </div>
-                                                <label for="add-1-house">Houses 1</label>
-                                            </div>
-
-                                            <div class="multiselect__slider-item">
-                                                <input type="checkbox" id="add-2-house" checked />
-                                                <div class="multiselect__slider-square">
-                                                    <img
-                                                        src="./images/checkbox-icon.svg"
-                                                        alt="icon"
-                                                    />
-                                                </div>
-                                                <label for="add-2-house">Houses 2</label>
-                                            </div>
-
-                                            <div class="multiselect__slider-item">
-                                                <input type="checkbox" id="add-3-house" />
-                                                <div class="multiselect__slider-square">
-                                                    <img
-                                                        src="./images/checkbox-icon.svg"
-                                                        alt="icon"
-                                                    />
-                                                </div>
-                                                <label for="add-3-house">Houses 3</label>
-                                            </div>
-
-                                            <div class="multiselect__slider-item">
-                                                <input type="checkbox" id="add-4-house" />
-                                                <div class="multiselect__slider-square">
-                                                    <img
-                                                        src="./images/checkbox-icon.svg"
-                                                        alt="icon"
-                                                    />
-                                                </div>
-                                                <label for="add-4-house">Houses 4</label>
-                                            </div>
-
-                                            <div class="multiselect__slider-item">
-                                                <input type="checkbox" id="add-5-house" />
-                                                <div class="multiselect__slider-square">
-                                                    <img
-                                                        src="./images/checkbox-icon.svg"
-                                                        alt="icon"
-                                                    />
-                                                </div>
-                                                <label for="add-5-house">Houses 5</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div
-                                    class="addpoints__tabs-tab multi-points-tab-content multi-subtract-points-tab"
-                                >
-                                    <div class="addpoints__amount subtract-amount">
-                                        <p class="addpoints__amount-title">Select Amount</p>
-
-                                        <div class="addpoints__amount-slider-wrapper no-scrollbar">
-                                            <div class="addpoints__amount-slider subtract-slider">
-                                                <div class="addpoints__amount-item">
-                                                    <p>-100</p>
-                                                </div>
-                                                <div class="addpoints__amount-item active">
-                                                    <p>-200</p>
-                                                </div>
-                                                <div class="addpoints__amount-item">
-                                                    <p>-300</p>
-                                                </div>
-                                                <div class="addpoints__amount-item">
-                                                    <p>-400</p>
-                                                </div>
-                                                <div class="addpoints__amount-item">
-                                                    <p>-500</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="multiselect__slider-container no-scrollbar">
-                                        <div class="multiselect__slider">
-                                            <div class="multiselect__slider-item">
-                                                <input type="checkbox" id="subtract-all-house" />
-                                                <div
-                                                    class="multiselect__slider-square subtract-square"
-                                                >
-                                                    <img
-                                                        src="./images/checkbox-icon.svg"
-                                                        alt="icon"
-                                                    />
-                                                </div>
-                                                <label
-                                                    class="subtract-item-lable"
-                                                    for="subtract-all-house"
-                                                    >All Houses</label
-                                                >
-                                            </div>
-
-                                            <div class="multiselect__slider-item">
-                                                <input
-                                                    type="checkbox"
-                                                    id="subtract-1-house"
-                                                    checked
-                                                />
-                                                <div
-                                                    class="multiselect__slider-square subtract-square"
-                                                >
-                                                    <img
-                                                        src="./images/checkbox-icon.svg"
-                                                        alt="icon"
-                                                    />
-                                                </div>
-                                                <label
-                                                    class="subtract-item-lable"
-                                                    for="subtract-1-house"
-                                                    >Houses 1</label
-                                                >
-                                            </div>
-
-                                            <div class="multiselect__slider-item">
-                                                <input
-                                                    type="checkbox"
-                                                    id="subtract-2-house"
-                                                    checked
-                                                />
-                                                <div
-                                                    class="multiselect__slider-square subtract-square"
-                                                >
-                                                    <img
-                                                        src="./images/checkbox-icon.svg"
-                                                        alt="icon"
-                                                    />
-                                                </div>
-                                                <label
-                                                    class="subtract-item-lable"
-                                                    for="subtract-2-house"
-                                                    >Houses 2</label
-                                                >
-                                            </div>
-
-                                            <div class="multiselect__slider-item">
-                                                <input type="checkbox" id="subtract-3-house" />
-                                                <div
-                                                    class="multiselect__slider-square subtract-square"
-                                                >
-                                                    <img
-                                                        src="./images/checkbox-icon.svg"
-                                                        alt="icon"
-                                                    />
-                                                </div>
-                                                <label
-                                                    class="subtract-item-lable"
-                                                    for="subtract-3-house"
-                                                    >Houses 3</label
-                                                >
-                                            </div>
-
-                                            <div class="multiselect__slider-item">
-                                                <input type="checkbox" id="subtract-4-house" />
-                                                <div
-                                                    class="multiselect__slider-square subtract-square"
-                                                >
-                                                    <img
-                                                        src="./images/checkbox-icon.svg"
-                                                        alt="icon"
-                                                    />
-                                                </div>
-                                                <label
-                                                    class="subtract-item-lable"
-                                                    for="subtract-4-house"
-                                                    >Houses 4</label
-                                                >
-                                            </div>
-
-                                            <div class="multiselect__slider-item">
-                                                <input type="checkbox" id="subtract-5-house" />
-                                                <div
-                                                    class="multiselect__slider-square subtract-square"
-                                                >
-                                                    <img
-                                                        src="./images/checkbox-icon.svg"
-                                                        alt="icon"
-                                                    />
-                                                </div>
-                                                <label
-                                                    class="subtract-item-lable"
-                                                    for="subtract-5-house"
-                                                    >Houses 5</label
-                                                >
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary">Add Points</button>
-                    </form>
-                </div>
+          <div class="modal">
+            <div class="modal__header">
+              <h3>Multiple House Points</h3>
+              <button
+                type="button"
+                class="modal__header-btn"
+                data-toggle="multi-points-modal"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M1.94663 16.6131L8.24543 9.99935L1.94663 3.38561C1.53063 2.94881 1.58684 2.29121 2.07217 1.91681C2.5575 1.54241 3.28816 1.593 3.70416 2.02979L10.0013 8.64179L16.2984 2.02979C16.7144 1.593 17.4451 1.54241 17.9304 1.91681C18.4158 2.29121 18.472 2.94881 18.056 3.38561L11.7572 9.99935L18.056 16.6131C18.472 17.0499 18.4158 17.7075 17.9304 18.0819C17.4451 18.4563 16.7144 18.4057 16.2984 17.9689L10.0013 11.3569L3.70416 17.9689C3.28816 18.4057 2.5575 18.4563 2.07217 18.0819C1.58684 17.7075 1.53063 17.0499 1.94663 16.6131Z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </button>
             </div>
+            <div class="modal__body multi-points-body">
+              <h2>Multiple House Points</h2>
+
+              <form class="addpoints">
+                <div class="addpoints__tabs">
+                  <div class="addpoints__tabs-header multi-points-tab-header">
+                    <button
+                      type="button"
+                      class="addpoints__tabs-btn active"
+                      data-toggle="multi-add-points-tab"
+                    >
+                      Add points
+                    </button>
+                    <button
+                      type="button"
+                      class="addpoints__tabs-btn subtract-btn"
+                      data-toggle="multi-subtract-points-tab"
+                    >
+                      Subtract points
+                    </button>
+                  </div>
+
+                  <div class="addpoints__tabs-content">
+                    <div class="addpoints__tabs-tab multi-add-points-tab multi-points-tab-content active">
+                      <div class="addpoints__amount">
+                        <p class="addpoints__amount-title">Select Amount</p>
+
+                        <div class="addpoints__amount-slider-wrapper no-scrollbar">
+                          <div class="addpoints__amount-slider">
+                            <div class="addpoints__amount-item">
+                              <p>+100</p>
+                            </div>
+                            <div class="addpoints__amount-item active">
+                              <p>+200</p>
+                            </div>
+                            <div class="addpoints__amount-item">
+                              <p>+300</p>
+                            </div>
+                            <div class="addpoints__amount-item">
+                              <p>+400</p>
+                            </div>
+                            <div class="addpoints__amount-item">
+                              <p>+500</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="multiselect__slider-container no-scrollbar">
+                        <div class="multiselect__slider">
+                          <div class="multiselect__slider-item">
+                            <input type="checkbox" id="add-all-house" />
+                            <div class="multiselect__slider-square">
+                              <img
+                                src="./images/checkbox-icon.svg"
+                                alt="icon"
+                              />
+                            </div>
+                            <label for="add-all-house">All Houses</label>
+                          </div>
+
+                          <div class="multiselect__slider-item">
+                            <input type="checkbox" id="add-1-house" checked />
+                            <div class="multiselect__slider-square">
+                              <img
+                                src="./images/checkbox-icon.svg"
+                                alt="icon"
+                              />
+                            </div>
+                            <label for="add-1-house">Houses 1</label>
+                          </div>
+
+                          <div class="multiselect__slider-item">
+                            <input type="checkbox" id="add-2-house" checked />
+                            <div class="multiselect__slider-square">
+                              <img
+                                src="./images/checkbox-icon.svg"
+                                alt="icon"
+                              />
+                            </div>
+                            <label for="add-2-house">Houses 2</label>
+                          </div>
+
+                          <div class="multiselect__slider-item">
+                            <input type="checkbox" id="add-3-house" />
+                            <div class="multiselect__slider-square">
+                              <img
+                                src="./images/checkbox-icon.svg"
+                                alt="icon"
+                              />
+                            </div>
+                            <label for="add-3-house">Houses 3</label>
+                          </div>
+
+                          <div class="multiselect__slider-item">
+                            <input type="checkbox" id="add-4-house" />
+                            <div class="multiselect__slider-square">
+                              <img
+                                src="./images/checkbox-icon.svg"
+                                alt="icon"
+                              />
+                            </div>
+                            <label for="add-4-house">Houses 4</label>
+                          </div>
+
+                          <div class="multiselect__slider-item">
+                            <input type="checkbox" id="add-5-house" />
+                            <div class="multiselect__slider-square">
+                              <img
+                                src="./images/checkbox-icon.svg"
+                                alt="icon"
+                              />
+                            </div>
+                            <label for="add-5-house">Houses 5</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="addpoints__tabs-tab multi-points-tab-content multi-subtract-points-tab">
+                      <div class="addpoints__amount subtract-amount">
+                        <p class="addpoints__amount-title">Select Amount</p>
+
+                        <div class="addpoints__amount-slider-wrapper no-scrollbar">
+                          <div class="addpoints__amount-slider subtract-slider">
+                            <div class="addpoints__amount-item">
+                              <p>-100</p>
+                            </div>
+                            <div class="addpoints__amount-item active">
+                              <p>-200</p>
+                            </div>
+                            <div class="addpoints__amount-item">
+                              <p>-300</p>
+                            </div>
+                            <div class="addpoints__amount-item">
+                              <p>-400</p>
+                            </div>
+                            <div class="addpoints__amount-item">
+                              <p>-500</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="multiselect__slider-container no-scrollbar">
+                        <div class="multiselect__slider">
+                          <div class="multiselect__slider-item">
+                            <input type="checkbox" id="subtract-all-house" />
+                            <div class="multiselect__slider-square subtract-square">
+                              <img
+                                src="./images/checkbox-icon.svg"
+                                alt="icon"
+                              />
+                            </div>
+                            <label
+                              class="subtract-item-lable"
+                              for="subtract-all-house"
+                            >
+                              All Houses
+                            </label>
+                          </div>
+
+                          <div class="multiselect__slider-item">
+                            <input
+                              type="checkbox"
+                              id="subtract-1-house"
+                              checked
+                            />
+                            <div class="multiselect__slider-square subtract-square">
+                              <img
+                                src="./images/checkbox-icon.svg"
+                                alt="icon"
+                              />
+                            </div>
+                            <label
+                              class="subtract-item-lable"
+                              for="subtract-1-house"
+                            >
+                              Houses 1
+                            </label>
+                          </div>
+
+                          <div class="multiselect__slider-item">
+                            <input
+                              type="checkbox"
+                              id="subtract-2-house"
+                              checked
+                            />
+                            <div class="multiselect__slider-square subtract-square">
+                              <img
+                                src="./images/checkbox-icon.svg"
+                                alt="icon"
+                              />
+                            </div>
+                            <label
+                              class="subtract-item-lable"
+                              for="subtract-2-house"
+                            >
+                              Houses 2
+                            </label>
+                          </div>
+
+                          <div class="multiselect__slider-item">
+                            <input type="checkbox" id="subtract-3-house" />
+                            <div class="multiselect__slider-square subtract-square">
+                              <img
+                                src="./images/checkbox-icon.svg"
+                                alt="icon"
+                              />
+                            </div>
+                            <label
+                              class="subtract-item-lable"
+                              for="subtract-3-house"
+                            >
+                              Houses 3
+                            </label>
+                          </div>
+
+                          <div class="multiselect__slider-item">
+                            <input type="checkbox" id="subtract-4-house" />
+                            <div class="multiselect__slider-square subtract-square">
+                              <img
+                                src="./images/checkbox-icon.svg"
+                                alt="icon"
+                              />
+                            </div>
+                            <label
+                              class="subtract-item-lable"
+                              for="subtract-4-house"
+                            >
+                              Houses 4
+                            </label>
+                          </div>
+
+                          <div class="multiselect__slider-item">
+                            <input type="checkbox" id="subtract-5-house" />
+                            <div class="multiselect__slider-square subtract-square">
+                              <img
+                                src="./images/checkbox-icon.svg"
+                                alt="icon"
+                              />
+                            </div>
+                            <label
+                              class="subtract-item-lable"
+                              for="subtract-5-house"
+                            >
+                              Houses 5
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                  Add Points
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
         {/* <!-- ================ Multiple Points Modal End ================== --> */}
-
-
-        
       </div>
     </div>
   );
