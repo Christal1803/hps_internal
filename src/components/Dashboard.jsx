@@ -25,6 +25,7 @@ function Dashboard() {
     //real-time data fetch
     const [House, setHouseData] = useState([]);
     useEffect(() => {
+        debugger
         const houseChannel = supabase.channel('custom-all-channel')
             .on(
                 'postgres_changes',
@@ -40,6 +41,7 @@ function Dashboard() {
     }, []);
 
     async function myHouse() {
+        debugger
         const school_id = sessionStorage.getItem("school_id");
         window.tableRows = "";
         const { data: House, error } = await supabase
@@ -85,6 +87,7 @@ function Dashboard() {
     }, []);
 
     async function myFunction() {
+        debugger
         await supabase.auth.getUser().then((value) => {
             if (value.data?.user) {
                 setUser(value.data.user);
@@ -98,6 +101,7 @@ function Dashboard() {
             .select('school_id')
             .eq('user_id', user_id)
             .order('lastlogin_date', { ascending: false });
+        sessionStorage.setItem("school_id", Member[0].school_id);
         if (Member.length == 0) {
             setLoading(true);
             setHouse(House);
@@ -266,7 +270,7 @@ function Dashboard() {
             const { data, error } = await supabase.auth.getSession()
             console.log(data)
             const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
-                console.log(event, session)
+               
             })
             await supabase.auth.signOut();
             setUser(null)

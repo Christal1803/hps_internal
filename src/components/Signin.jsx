@@ -36,7 +36,7 @@ function Signin() {
                 prompt: 'select_account',
             },
             
-          redirectTo: "http://localhost:3000/dashboard",
+            redirectTo: "https://hps.addant.com/dashboard",
 
       },
     });
@@ -106,8 +106,13 @@ function Signin() {
         
         const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
             console.log(event, session)
-            if (event == 'SIGNED_IN') console.log('SIGNED_IN', session)
+            if (event == 'SIGNED_IN')
+            if (session.user.aud = "authenticated") {
+                navigate("/dashboard");
+            }
             setUser(session?.user)
+            setAuth(true);
+            
             if (event == 'SIGNED_OUT') console.log('SIGNED_OUT', session)
             setUser(null)
         })
