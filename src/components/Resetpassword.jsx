@@ -18,7 +18,8 @@ function Resetpassword() {
   const [errorMessage, setErrorMessage] = useState("");
   const [message, setMessage] = useState("");
 
-  const handleChangePassword = async (event) => {
+    const handleChangePassword = async (event) => {
+      debugger
     const mail = localStorage.getItem("Email");
     event.preventDefault();
     let { data, error } = await supabase.auth.updateUser({

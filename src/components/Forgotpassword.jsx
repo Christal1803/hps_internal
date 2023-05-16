@@ -70,7 +70,7 @@ function Forgotpassword() {
 
             <div className="card__heading">
               <img src={mailicon} alt="Mail icon" />
-              <h5>Forgot Password / School ID</h5>
+              <h5>Forgot Password</h5>
               <p>Enter your email below to reset</p>
             </div>
 
@@ -92,8 +92,7 @@ function Forgotpassword() {
 
               <div className="login__form-text">
                 <p>
-                  If you have an account in our system, an email with a new
-                  password and your School ID will be emailed to you.
+                  If you have an account in our system, a reset password link will be sent to your registered email .
                 </p>
               </div>
 
