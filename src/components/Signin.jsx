@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import envelopeicon from "../assets/images/auth/envelope-icon.svg";
 import lockicon from "../assets/images/auth/lock-icon.svg";
@@ -15,7 +16,11 @@ function Signin() {
   const MovetoForgotpassword = () => {
     let path = `/forgotpassword`;
     navigate(path);
-  };
+    };
+
+    const [user, setUser] = useState("");
+
+    const [auth, setAuth] = useState(false);
 
   //Login with OAuth
   const [loading, setLoading] = useState(false);
@@ -23,18 +28,39 @@ function Signin() {
     event.preventDefault();
     setLoading(true);
     let { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: "http://localhost:3000/dashboard",
+        provider: "google",
+        persistSession: false,
+        options: {
+            queryParams: {
+                access_type: 'offline',
+                prompt: 'select_account',
+            },
+            
+          redirectTo: "http://localhost:3000/dashboard",
+
       },
     });
-    setLoading(false);
-  };
+     
+      setLoading(false);
+      const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+          console.log(event, session)
+          if (event == 'SIGNED_IN') console.log('SIGNED_IN', session)
+          setUser(session.user)
+          setAuth(true);
+          if (event == 'SIGNED_OUT') console.log('SIGNED_OUT', session)
+          setUser(null)
+          setAuth(false);
+      })
+    };
+
+
+
+
 
   //Login with email & password
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
+    const [message, setMessage] = useState("");
 
   const handleLoginEmail = async (event) => {
     sessionStorage.removeItem("user_id");
@@ -71,7 +97,25 @@ function Signin() {
         return data;
       }
     }
-  };
+    };
+
+    useEffect(() => {
+        debugger
+        const { data, error } = supabase.auth.getSession();
+        console.log(data)
+        
+        const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+            console.log(event, session)
+            if (event == 'SIGNED_IN') console.log('SIGNED_IN', session)
+            setUser(session?.user)
+            if (event == 'SIGNED_OUT') console.log('SIGNED_OUT', session)
+            setUser(null)
+        })
+
+        return () => {
+            authListener.subscription.unsubscribe();
+        };
+    }, []);
 
   //password toggle
   const [showPassword, setShowPassword] = useState(false);
