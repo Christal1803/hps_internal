@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
-import { createClient } from "@supabase/supabase-js";
 import logo from "../assets/images/dashboard/logo.svg";
 import crown from "../assets/images/dashboard/crown.svg";
 import logouticon from "../assets/images/dashboard/logout-icon.svg";
@@ -9,11 +8,9 @@ import dotsicon from "../assets/images/dashboard/dots-icon.svg";
 import check from "../assets/images/dashboard/check.svg";
 import reset from "../assets/images/dashboard/reset.svg";
 import ognisko from "../assets/images/dashboard/ognisko.png";
-import reveur from "../assets/images/dashboard/reveur.png";
-import hufflepuf from "../assets/images/dashboard/hufflepuf.png";
-import ubunto from "../assets/images/dashboard/ubunto.png";
 import AppScript from "../assets/js/AppScript";
 import IndexScript from "../assets/js/IndexScript";
+import supabase from "../supabase";
 
 function Dashboard() {
     const [user, setUser] = useState('')
@@ -25,16 +22,14 @@ function Dashboard() {
         navigate(path);
     };
 
-
+    //real-time data fetch
     const [House, setHouseData] = useState([]);
     useEffect(() => {
-
         const houseChannel = supabase.channel('custom-all-channel')
             .on(
                 'postgres_changes',
                 { event: '*', schema: 'public', table: 'House' },
                 (payload) => {
-                    debugger
                     console.log('Change received!', payload)
                     myHouse();
                 }
@@ -42,10 +37,6 @@ function Dashboard() {
             .subscribe()
         return () => {
         };
-    }, []);
-
-    useEffect(() => {
-        myFunction();
     }, []);
 
     async function myHouse() {
@@ -57,7 +48,6 @@ function Dashboard() {
             .eq("school_id", school_id)
             .eq("active", 'TRUE');
         setHouse(House);
-        console.log(house)
         if (House.length == 0) {
             setLoading(true);
             window.tableRows = "no houses are found";
@@ -89,12 +79,14 @@ function Dashboard() {
         }
     }
 
+    // fetching Houses
+    useEffect(() => {
+        myFunction();
+    }, []);
 
     async function myFunction() {
-        debugger
         await supabase.auth.getUser().then((value) => {
             if (value.data?.user) {
-                console.log(value.data.user);
                 setUser(value.data.user);
                 sessionStorage.setItem("user_id", value.data.user.id);
 
@@ -106,8 +98,6 @@ function Dashboard() {
             .select('school_id')
             .eq('user_id', user_id)
             .order('lastlogin_date', { ascending: false });
-        console.log(Member);
-        debugger
         if (Member.length == 0) {
             setLoading(true);
             setHouse(House);
@@ -122,20 +112,15 @@ function Dashboard() {
                 .from('School')
                 .select('school_name')
                 .eq("school_id", school_id);
-            console.log(School);
             window.schoolName = School[0].school_name;
             let memberArray = [];
             for (let i = 0; i < Member.length; i++) {
                 let member = Member[i];
-                console.log(member); // Do something with each member
                 let { data: School } = await supabase
                     .from('School')
                     .select('school_name')
                     .eq("school_id", member.school_id);
-                console.log(School);
-                debugger
                 memberArray.push(School[0]);
-                console.log(memberArray)
                 window.selectSchool = memberArray.map((element) => {
                     return (
                         //active
@@ -145,8 +130,6 @@ function Dashboard() {
 
                     );
                 });
-
-
             }
 
 
@@ -157,13 +140,10 @@ function Dashboard() {
                 .eq("school_id", school_id)
                 .eq("active", 'TRUE');
             setHouse(House);
-            console.log(house)
             if (House.length == 0) {
                 setLoading(true);
                 window.tableRows = "no houses are found";
-                //inputElement.current.click();
                 setLoading(false);
-
             }
             if (House.length != 0) {
                 setLoading(true);
@@ -183,48 +163,37 @@ function Dashboard() {
                         </div>
                     );
                 });
-                //inputElement.current.click();
                 setLoading(false);
             }
             if (error) {
                 console.log("error occured")
             }
         }
-     
-       
     }
 
+    // school selection
     const handleChangeSchool = (param) => {
-        debugger
-        console.log(param);
-
         window.paramSchool_id = param
         SchoolName();
-    
     };
-    
- 
+
+
     async function SchoolName() {
-        debugger
         let { data: School, error } = await supabase
             .from('School')
             .select('school_id')
             .eq("school_name", window.paramSchool_id);
-        console.log(School);
         window.schoolName = window.paramSchool_id;
 
 
         window.tableRows = "";
-        debugger
         const { data: House, error1 } = await supabase
             .from("House")
             .select("*")
             .eq("school_id", School[0].school_id)
             .eq("active", 'TRUE');
-        debugger
         sessionStorage.setItem("school_id", School[0].school_id);
         setHouse(House);
-        console.log(house)
         if (House.length == 0) {
             setLoading(true);
             window.tableRows = "no houses are found";
@@ -242,7 +211,7 @@ function Dashboard() {
             setLoading(false);
 
         }
-        if (House.length != 0 ) {
+        if (House.length != 0) {
             setLoading(true);
             window.tableRows = House.map((element) => {
                 return (
@@ -270,17 +239,8 @@ function Dashboard() {
                     console.log('Update successful:', response);
 
                 })
-                //inputElement.click();
-           
-           
-
             setLoading(false);
         }
-   
-    }
-
-    async function refresh() {
-        //window.location.reload(false);
 
     }
 
@@ -290,23 +250,14 @@ function Dashboard() {
         navigate(path);
     };
 
-    // supabase credentials
-    const supabaseUrl = "https://zqydhjfofwxhvbagfwpg.supabase.co";
-    const supabaseKey =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpxeWRoamZvZnd4aHZiYWdmd3BnIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY3MzIwNjY1MiwiZXhwIjoxOTg4NzgyNjUyfQ.3xA7iglBkdpc1AHlnUEHUFz7GhlViqdrprxWO7W4ZTU";
-    const supabase = createClient(supabaseUrl, supabaseKey);
-
     //logout function
     const [loading, setLoading] = useState(false);
-    //const [user, setUser] = useState(null);
     const history = useNavigate();
     async function handleLogout() {
-        debugger
         try {
             setLoading(true);
             await supabase.auth.getUser().then((value) => {
                 if (value.data?.user) {
-                    console.log(value.data.user);
                     setUser(value.data.user);
                     sessionStorage.setItem("user_id", value.data.user.id);
 
