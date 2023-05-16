@@ -12,7 +12,6 @@ import ognisko from "../assets/images/dashboard/ognisko.png";
 import reveur from "../assets/images/dashboard/reveur.png";
 import hufflepuf from "../assets/images/dashboard/hufflepuf.png";
 import ubunto from "../assets/images/dashboard/ubunto.png";
-
 import AppScript from "../assets/js/AppScript";
 import IndexScript from "../assets/js/IndexScript";
 
