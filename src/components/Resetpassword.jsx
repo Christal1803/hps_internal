@@ -16,11 +16,14 @@ function Resetpassword() {
   const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpxeWRoamZvZnd4aHZiYWdmd3BnIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY3MzIwNjY1MiwiZXhwIjoxOTg4NzgyNjUyfQ.3xA7iglBkdpc1AHlnUEHUFz7GhlViqdrprxWO7W4ZTU";
   const supabase = createClient(supabaseUrl, supabaseKey);
 
-  //resetting password
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+
+    //resetting password
+    const [newPassword, setNewPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+    const [message, setMessage] = useState('');
+
   const handleChangePassword = async (event) => {
     const mail = localStorage.getItem("Email");
     event.preventDefault();
@@ -29,7 +32,14 @@ function Resetpassword() {
       email: mail,
       password: confirmPassword,
     });
-    
+
+      if (newPassword !== confirmPassword) {
+          setMessage('Passwords do not match');
+      } else {
+          setMessage('Passwords match');
+          navigate("/signin");
+      }
+
     if (error) {
       console.log("something went wrong");
       setErrorMessage("An error occurred. Please try again later.");
@@ -55,26 +65,7 @@ function Resetpassword() {
     }
   };
 
-  //passwordvalidation
-  const [passwordError, setPasswordError] = useState('');
-  const handleConfirmPassword = () => {
-debugger
-    if (newPassword !== confirmPassword) {
-      debugger
-      setPasswordError('Passwords do not match');
-    } else {
-      debugger
-      setPasswordError('match');
-      // Perform further actions, such as submitting the form
-    }
-  };
-
-  const handletwofunctions = (e) => {
-    debugger
-    setConfirmPassword(e.target.value)
-    console.log(setConfirmPassword)
-    handleConfirmPassword()
-  };
+ 
 
 
 
@@ -114,12 +105,12 @@ debugger
               <div className="login__form-row forgot-row">
                 <img src={lockicon} className="login__form-icon" alt="icon" />
                 <img src={imageSource} className="login__form-eye fa fa-eye" alt="icon" onClick={handleClick}/>
-                <input value={confirmPassword} onChange={handletwofunctions} type={showPassword ? 'text' : 'password'} id="confirmpassword" placeholder="confirm new password"/>
+                              <input value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} type={showPassword ? 'text' : 'password'} id="confirmpassword" placeholder="confirm new password"/>
               </div>
 
-              <div className="login__form-text">
-                <span>{passwordError && <p>{passwordError}</p>}</span>
-              </div>
+                          <div className="login__form-text">
+                              <span><p className="danger">{message}</p></span>
+                          </div>
 
               <div className="login__form-links">
                 <button type="submit" className="btn btn-primary login__form-btn" onClick={handleChangePassword} >Reset password </button>

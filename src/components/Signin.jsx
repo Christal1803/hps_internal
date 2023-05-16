@@ -30,20 +30,25 @@ function Signin() {
     let { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: "http://localhost:3000/dashboard",
-      },
+          redirectTo: "http://localhost:3000/dashboard",
+        },
+       
     });
-    setLoading(false);
-    console.log(data, error);
+      setLoading(false);
+      debugger
+
   };
  
   //Login with email & password
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
+    const [message, setMessage] = useState("");
+ 
     const handleLoginEmail = async (event) => {
-        console.log(email)
-            ;
+        console.log(email);
+        sessionStorage.removeItem("user_id");
+        sessionStorage.removeItem("school_id");
+            
         console.log(password);
         event.preventDefault();
         let { data, error } = await supabase.auth.signInWithPassword({
@@ -59,6 +64,7 @@ function Signin() {
                 .eq('user_id', data.user.id)
                 .order('lastlogin_date', { ascending: false });
             ;
+            sessionStorage.setItem("user_id", data.user.id);
             sessionStorage.setItem("school_id", Member[0].school_id);
             if (error) {
                 console.log(error);
