@@ -9,7 +9,6 @@ import Dashboard from './components/Dashboard';
 import Resetpassword from './components/Resetpassword';
 import Newsfeed from './components/Newsfeed';
 import Signin from './components/Signin';
-import Schoolselection from './components/Schoolselection';
 import AuthProvider from './AuthProvider';
 import AuthRoute from './AuthRoute';
 import Setting from './components/Settings';
@@ -28,7 +27,6 @@ root.render(
           <Route path="/" element={<AuthRoute />}>
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="newsfeed" element={<Newsfeed />} />
-            <Route path="schoolselection" element={<Schoolselection />} />
           <Route path="settings" element={<Setting />} />
           </Route>
         </Routes>
