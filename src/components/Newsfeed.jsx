@@ -29,6 +29,11 @@ function Newsfeed() {
     navigate(path);
   };
 
+  const MovetoSettings = () => {
+    let path = `/settings`;
+    navigate(path);
+  };
+
   const supabaseUrl = "https://zqydhjfofwxhvbagfwpg.supabase.co";
   const supabaseKey =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpxeWRoamZvZnd4aHZiYWdmd3BnIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY3MzIwNjY1MiwiZXhwIjoxOTg4NzgyNjUyfQ.3xA7iglBkdpc1AHlnUEHUFz7GhlViqdrprxWO7W4ZTU";
@@ -94,7 +99,7 @@ function Newsfeed() {
                             </li>
 
                             <li class="sidebar__menu-item " >
-                                <a  class="sidebar__menu-link active">
+                                <a  onClick={MovetoNewsfeed} class="sidebar__menu-link active">
                                     <span class="sidebar__menu-icon">
                                         <svg
                                             width="20"
@@ -116,7 +121,7 @@ function Newsfeed() {
                             </li>
 
                             <li class="sidebar__menu-item">
-                                <a href="#" class="sidebar__menu-link">
+                                <a onClick={MovetoSettings} class="sidebar__menu-link">
                                     <span class="sidebar__menu-icon">
                                         <svg
                                             width="20"
@@ -705,7 +710,7 @@ function Newsfeed() {
                 </li>
 
                 <li class="mobile-menu__list-item">
-                    <a href="#" class="mobile-menu__list-link">
+                    <a onClick={MovetoSettings} class="mobile-menu__list-link">
                         <span class="icon">
                             <svg
                                 width="20"

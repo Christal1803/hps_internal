@@ -10,21 +10,30 @@ import Resetpassword from './components/Resetpassword';
 import Newsfeed from './components/Newsfeed';
 import Signin from './components/Signin';
 import Schoolselection from './components/Schoolselection';
+import AuthProvider from './AuthProvider';
+import AuthRoute from './AuthRoute';
+import Setting from './components/Settings';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-  <Router>
-    <Routes>
-      <Route path="/" element={<Signin />} />
-      <Route path="signin" element={<Signin />} />
-      <Route path="forgotpassword" element={<Forgotpassword />} />
-      <Route path="dashboard" element={<Dashboard />} />
-      <Route path="resetpassword" element={<Resetpassword />} />
-      <Route path="newsfeed" element={<Newsfeed />} />
-      <Route path="schoolselection" element={<Schoolselection />} />
-    </Routes>
-  </Router>
+ <Router>
+      <AuthProvider>
+        <Routes>
+          <Route exact path="/" element={<Signin />} />
+          <Route exact path="/*" element={<Signin />} />
+          <Route path="signin" element={<Signin />} />
+          <Route path="forgotpassword" element={<Forgotpassword />} />
+          <Route path="resetpassword" element={<Resetpassword />} />
+          <Route path="/" element={<AuthRoute />}>
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="newsfeed" element={<Newsfeed />} />
+            <Route path="schoolselection" element={<Schoolselection />} />
+          <Route path="settings" element={<Setting />} />
+          </Route>
+        </Routes>
+      </AuthProvider>
+    </Router>
 </React.StrictMode>
 );
 reportWebVitals();
