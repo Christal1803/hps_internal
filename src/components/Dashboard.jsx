@@ -305,7 +305,14 @@ function Dashboard() {
         debugger
         try {
             setLoading(true);
+            await supabase.auth.getUser().then((value) => {
+                if (value.data?.user) {
+                    console.log(value.data.user);
+                    setUser(value.data.user);
+                    sessionStorage.setItem("user_id", value.data.user.id);
 
+                }
+            })
             const { data, error } = await supabase.auth.getSession()
             console.log(data)
             await supabase.auth.signOut();

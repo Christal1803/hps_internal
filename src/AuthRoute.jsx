@@ -6,8 +6,6 @@ const AuthRoute = () => {
   const location = useLocation();
 
 
-  debugger
-
   return user ? (
     <Outlet />
   ) : (

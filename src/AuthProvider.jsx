@@ -30,7 +30,7 @@ const AuthProvider = ({ children }) => {
         setUser(session.user);
         setAuth(true);
       }
-      console.log(auth)
+      //console.log(auth)
     });
     return () => {
       data.subscription.unsubscribe();
