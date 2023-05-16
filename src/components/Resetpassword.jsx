@@ -65,10 +65,6 @@ function Resetpassword() {
     }
   };
 
- 
-
-
-
 
 
   return (
