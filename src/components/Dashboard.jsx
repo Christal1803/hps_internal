@@ -10,7 +10,7 @@ import reset from "../assets/images/dashboard/reset.svg";
 import ognisko from "../assets/images/dashboard/ognisko.png";
 import AppScript from "../assets/js/AppScript";
 import IndexScript from "../assets/js/IndexScript";
-import supabase from "../supabase";
+import { supabase } from "../supabase";
 
 function Dashboard() {
     const [user, setUser] = useState('')
@@ -265,7 +265,11 @@ function Dashboard() {
             })
             const { data, error } = await supabase.auth.getSession()
             console.log(data)
+            const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+                console.log(event, session)
+            })
             await supabase.auth.signOut();
+            setUser(null)
             console.log("Logout successful");
             history("/");
         } catch (error) {
@@ -743,7 +747,6 @@ function Dashboard() {
                                 type="button"
                                 class="modal__header-btn"
                                 data-toggle="select-schools-modal"
-                                onClick={(e) => refresh()}
                             >
                                 <svg
                                     width="20"
