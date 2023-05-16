@@ -27,49 +27,6 @@ function Dashboard() {
     };
 
 
-
-    useEffect(() => {
-
-        async function getUser() {
-            await supabase.auth.getUser().then((value) => {
-                if (value.data?.user) {
-                    console.log(value.data.user);
-                    setUser(value.data.user);
-
-                    let { data: Member, error } =  supabase
-                        .from('Member')
-                        .select('school_id')
-                        .eq('user_id', value.data.user.id)
-                        .order('lastlogin_date', { ascending: false });
-                    ;
-                    sessionStorage.setItem("user_id", value.data.user.id);
-                    sessionStorage.setItem("school_id", Member[0].school_id);
-                    if (error) {
-                        console.log(error);
-                        return [];
-                    }
-                    else {
-                         supabase
-                            .from('Member')
-                            .update({ lastlogin_date: new Date() })
-                             .eq('user_id', value.data.user.id)
-                            .eq('school_id', Member[0].school_id)
-                            .then(response => {
-                                console.log('Update successful:', response);
-
-                            })
-                        myFunction();
-                        return ;
-
-                    }
-                }
-            })
-        }
-
-        
-        getUser();
-    }, []);
-
     const [House, setHouseData] = useState([]);
     useEffect(() => {
 
@@ -91,13 +48,6 @@ function Dashboard() {
     useEffect(() => {
         myFunction();
     }, []);
-
-    const InputComponent = () => {
-        const inputElement = React.useRef(null)
-        console.log(inputElement);
-        return <input ref={inputElement} />
-        console.log(inputElement);
-    }
 
     async function myHouse() {
         const school_id = sessionStorage.getItem("school_id");
@@ -143,11 +93,15 @@ function Dashboard() {
 
     async function myFunction() {
         debugger
+        await supabase.auth.getUser().then((value) => {
+            if (value.data?.user) {
+                console.log(value.data.user);
+                setUser(value.data.user);
+                sessionStorage.setItem("user_id", value.data.user.id);
 
+            }
+        })
         const user_id = sessionStorage.getItem("user_id");
-      
-       
-
         let { data: Member, error1 } = await supabase
             .from('Member')
             .select('school_id')
@@ -351,6 +305,9 @@ function Dashboard() {
         debugger
         try {
             setLoading(true);
+
+            const { data, error } = await supabase.auth.getSession()
+            console.log(data)
             await supabase.auth.signOut();
             console.log("Logout successful");
             history("/");
