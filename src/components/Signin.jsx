@@ -36,7 +36,7 @@ function Signin() {
                 prompt: 'select_account',
             },
             
-            redirectTo: "https://hps.addant.com/dashboard",
+            redirectTo: "https://hps.addant.com/#/dashboard",
 
       },
     });
@@ -71,7 +71,8 @@ function Signin() {
       password: password,
     });
     if (error) {
-      console.log("Invaid Credentials");
+        console.log("Invaid Credentials");
+        setMessage(`Invalid credentials`);
     } else {
       let { data: Member, error } = await supabase
         .from("Member")
@@ -100,7 +101,6 @@ function Signin() {
     };
 
     useEffect(() => {
-        debugger
         const { data, error } = supabase.auth.getSession();
         console.log(data)
         
@@ -189,7 +189,7 @@ function Signin() {
                   type={showPassword ? "text" : "password"}
                   id="password"
                   placeholder="password"
-                />
+                /> 
               </div>
 
               {/* <!-- Row 3 --> */}
@@ -200,7 +200,7 @@ function Signin() {
 
               <div className="login__form-links">
                 <a onClick={MovetoForgotpassword} className="login__form-link">
-                  Forgot Password or School ID
+                  Forgot Password
                 </a>
                 <button
                   type="submit"

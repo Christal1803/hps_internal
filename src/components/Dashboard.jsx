@@ -22,10 +22,15 @@ function Dashboard() {
         navigate(path);
     };
 
+
+    const MovetoSettings = () => {
+        let path = `/settings`;
+        navigate(path);
+    };
+
     //real-time data fetch
     const [House, setHouseData] = useState([]);
     useEffect(() => {
-        debugger
         const houseChannel = supabase.channel('custom-all-channel')
             .on(
                 'postgres_changes',
@@ -343,7 +348,7 @@ function Dashboard() {
                                 </li>
 
                                 <li class="sidebar__menu-item">
-                                    <a href="#" class="sidebar__menu-link">
+                                    <a onClick={MovetoSettings } class="sidebar__menu-link">
                                         <span class="sidebar__menu-icon">
                                             <svg
                                                 width="20"
