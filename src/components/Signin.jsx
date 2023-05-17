@@ -36,7 +36,7 @@ function Signin() {
                 prompt: 'select_account',
             },
             
-            redirectTo: "https://hps.addant.com/#/dashboard",
+            redirectTo: "https://hpsstage.netlify.app/dashboard",
 
       },
     });

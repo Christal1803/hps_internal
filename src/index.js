@@ -25,7 +25,7 @@ root.render(
                     <Route exact path="/*" element={<Signin />} />
                     <Route path="signin" element={<Signin />} />
                     <Route path="forgotpassword" element={<Forgotpassword />} />
-                    <Route path="resethps" element={<Resetpassword />} />
+                    <Route path="reset-password" element={<Resetpassword />} />
                     <Route path="/" element={<AuthRoute />}>
                         <Route path="dashboard" element={<Dashboard />} />
                         <Route path="newsfeed" element={<Newsfeed />} />
