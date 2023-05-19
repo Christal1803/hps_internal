@@ -802,24 +802,14 @@ function Dashboard() {
                         </div>
                         <div class="modal__body">
                             <div class="points__current">
-                                <h2 class="text-center">Select School</h2>
+                                <h4 class="text-center">Are you sure you really want to reset your house points ?</h4>
                             </div>
 
                             <form class="addpoints">
-                                <div class="addpoints__tabs">
-                                    <div class="addpoints__tabs-content">
-                                        <div class="addpoints__tabs-tab ognisko-add-points-tab active ognisko-tab-content">
-                                            <div class="select__slider-container no-scrollbar">
-                                                <div class="select__slider">
-
-                                                    {window.selectSchool}
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
+                            <button type="submit" class="btn">Yes</button>
+                            <br>
+                            </br>
+                            <button type="submit" class="btn">No</button>
 
                             </form>
                         </div>
