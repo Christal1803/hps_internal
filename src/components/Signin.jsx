@@ -10,6 +10,7 @@ import eyeslash from "../assets/images/auth/eyeslash.svg";
 import logo from "../assets/images/auth/logo.svg";
 import { supabase } from "../supabase";
 
+
 function Signin() {
   //page redirect function
   let navigate = useNavigate();
@@ -36,7 +37,7 @@ function Signin() {
                 prompt: 'select_account',
             },
             
-            redirectTo: "https://hpsstage.netlify.app/dashboard",
+            redirectTo: "http://localhost:3000/dashboard",
 
       },
     });
@@ -52,10 +53,6 @@ function Signin() {
           setAuth(false);
       })
     };
-
-
-
-
 
   //Login with email & password
   const [email, setEmail] = useState("");

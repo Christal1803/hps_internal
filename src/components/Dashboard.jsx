@@ -11,10 +11,13 @@ import ognisko from "../assets/images/dashboard/ognisko.png";
 import AppScript from "../assets/js/AppScript";
 import IndexScript from "../assets/js/IndexScript";
 import { supabase } from "../supabase";
+// import PageLoader from "./PageLoader";
+
 
 function Dashboard() {
-    const [user, setUser] = useState('')
+    const [user, setUser] = useState('');
     const [house, setHouse] = useState('');
+    // const [pageLoading, setPageLoading] = useState(true);
     //page redirect function
     let navigate = useNavigate();
     const MovetoNewsfeed = () => {
@@ -39,11 +42,12 @@ function Dashboard() {
                 (payload) => {
                     console.log('Change received!', payload)
                     myHouse();
+                    // setPageLoading(false)
                 }
             )
             .subscribe()
-        return () => {
-        };
+        
+        
     }, []);
 
     async function myHouse() {
@@ -98,7 +102,6 @@ function Dashboard() {
             if (value.data?.user) {
                 setUser(value.data.user);
                 sessionStorage.setItem("user_id", value.data.user.id);
-
             }
         })
         const user_id = sessionStorage.getItem("user_id");
@@ -155,6 +158,7 @@ function Dashboard() {
                 window.tableRows = "no houses are found";
                 setLoading(false);
             }
+           
             if (House.length != 0) {
                 setLoading(true);
                 window.tableRows = House.map((element) => {
@@ -172,6 +176,7 @@ function Dashboard() {
                             </div>
                         </div>
                     );
+                    // setPageLoader(false);
                 });
                 setLoading(false);
             }
@@ -292,6 +297,7 @@ function Dashboard() {
 
     return (
         <div className="body">
+           {/* {pageLoading ? <PageLoader/>:''} */}
             <div class="layout">
                 {/* <!-- ================ Sidebar Start ================== --> */}
                 <aside class="sidebar">
