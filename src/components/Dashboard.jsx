@@ -13,10 +13,12 @@ import ognisko from "../assets/images/dashboard/ognisko.png";
 import AppScript from "../assets/js/AppScript";
 import IndexScript from "../assets/js/IndexScript";
 import { supabase } from "../supabase";
+import PageLoader from "./PageLoader";
 
 function Dashboard() {
     const [user, setUser] = useState('')
     const [house, setHouse] = useState('');
+    const [pageLoading, setPageLoading] = useState(true);
     //page redirect function
     let navigate = useNavigate();
     const MovetoNewsfeed = () => {
@@ -189,6 +191,7 @@ function Dashboard() {
                         </div>
                     );
                 });
+                setPageLoading(false)
                 setLoading(false);
             }
             if (error) {
@@ -308,6 +311,7 @@ function Dashboard() {
 
     return (
         <div className="body">
+            {pageLoading ? <PageLoader/>:''}
             <div class="layout">
                 {/* <!-- ================ Sidebar Start ================== --> */}
                 <aside class="sidebar">
