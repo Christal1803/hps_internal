@@ -545,7 +545,7 @@ display: none;
 .search__dropwdown-list {
   background: var(--menu-bg);
   border: 2px solid rgba(93, 155, 249, 0.25);
-  border-bottom: 7px solid var(--blue-100);
+  border-bottom: 2px solid var(--blue-100);
   border-radius: 5px;
   box-shadow: -12px 25px 42px rgba(0, 0, 0, 0.05);
   padding: 11px 46px;
@@ -4614,6 +4614,20 @@ a.sidebar__menu-logo.mobile-nav {
   margin-bottom: 0px;
   cursor: pointer;
 }
+
+
+/*dropdown-house list*/
+
+ul.search__dropwdown-houselist {
+  background: var(--menu-bg);
+  border: 2px solid rgba(93, 155, 249, 0.25);
+  border-bottom: 7px solid var(--blue-100);
+  border-radius: 5px;
+  box-shadow: -12px 25px 42px rgba(0, 0, 0, 0.05);
+  padding: 0px 46px;
+  padding-bottom: 0;
+}
+
 /* page loader - sanath sb */
 .center-body {
   display: flex;
@@ -4628,9 +4642,7 @@ a.sidebar__menu-logo.mobile-nav {
   background-color: rgba(0, 0, 0, 0.5);
 z-index:210;
 }
-.page-loader{
 
-}
 .hps-loader {
   overflow: hidden;
   position: relative;

@@ -21,11 +21,12 @@ function Dashboard() {
 
     async function ResetHouses() {
         try {
-
             const { data, error } = await supabase
               .from('House')
               .update({ total_points: 0 })
               .eq('active', 'TRUE');
+              setPageLoading(true)
+              
         
             if (error) {
               console.error('Error updating data:', error);
@@ -35,6 +36,7 @@ function Dashboard() {
           } catch (error) {
             console.error('An error occurred:', error);
           }
+          
     }
 
 
@@ -159,24 +161,20 @@ function Dashboard() {
                 window.selectSchool = memberArray.map((element) => {
                     return (
                         //active
-
-                       
-                
-
-<li class="search__dropwdown-item">
-                                        <button
-                                            type="button"
-                                            class="search__dropwdown-link"
-                                            data-id="select-schools-modal" onClick={(e) => handleChangeSchool(element.school_name)}
-                                        >
-                                            <img
-                                                src={houseicon}
-                                                class="search__dropwdown-icon"
-                                                alt="house icon"
-                                            />
-                                            <span>{element.school_name}</span>
-                                        </button>
-                                    </li>
+                        <li class="search__dropwdown-item">
+                            <button
+                                type="button"
+                                class="search__dropwdown-link"
+                                data-id="select-schools-modal" onClick={(e) => handleChangeSchool(element.school_name)}
+                            >
+                                <img
+                                    src={houseicon}
+                                    class="search__dropwdown-icon"
+                                    alt="house icon"
+                                />
+                                <span>{element.school_name}</span>
+                            </button>
+                        </li>
 
                     );
                 });
@@ -513,9 +511,12 @@ function Dashboard() {
                                         </button>
                                     </li>
 
-                                    <hr/>
+                                    
 
-                                    <li class="search__dropwdown-item">
+                                    
+                                </ul>
+                                <ul class="search__dropwdown-houselist">
+                                <li class="search__dropwdown-item">
                                         <button
                                             type="button"
                                             class="search__dropwdown-link"
