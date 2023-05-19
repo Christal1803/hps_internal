@@ -7,6 +7,7 @@ import eye from "../assets/images/auth/eye.svg";
 import eyeslash from "../assets/images/auth/eyeslash.svg";
 import { useState } from "react";
 import { supabase } from "../supabase";
+import PageLoader from "./PageLoader";
 
 function Resetpassword() {
   //page redirect function
@@ -23,15 +24,17 @@ function Resetpassword() {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [message, setMessage] = useState("");
+  const [pageLoading, setPageLoading] = useState(false);
 
   const handleChangePassword = async (event) => {
     const mail = localStorage.getItem("Email");
     event.preventDefault();
+    setPageLoading(true)
     let { data, error } = await supabase.auth.updateUser({
       email: mail,
       password: confirmPassword,
     });
-
+    setPageLoading(false)
     if (newPassword !== confirmPassword) {
       setMessage("Passwords do not match");
       setNewPassword('');
@@ -73,6 +76,7 @@ function Resetpassword() {
 
   return (
     <div className="login">
+       {pageLoading ? <PageLoader/>:''}
       <main className="login__main">
         {/* <!-- ====== Logo ====== --> */}
         <div className="login__brand forgot-password-brand">
