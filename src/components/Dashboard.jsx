@@ -31,6 +31,7 @@ function Dashboard() {
     //real-time data fetch
     const [House, setHouseData] = useState([]);
     useEffect(() => {
+        debugger
         const houseChannel = supabase.channel('custom-all-channel')
             .on(
                 'postgres_changes',
@@ -529,7 +530,7 @@ function Dashboard() {
                     </li>
 
                     <li class="mobile-menu__list-item">
-                        <a href="#" class="mobile-menu__list-link">
+                        <a onClick={MovetoSettings} class="mobile-menu__list-link">
                             <span class="icon">
                                 <svg
                                     width="20"

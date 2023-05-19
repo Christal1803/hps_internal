@@ -19,28 +19,26 @@ function Resetpassword() {
   const [message, setMessage] = useState("");
 
     const handleChangePassword = async (event) => {
-      debugger
-    const mail = localStorage.getItem("Email");
-    event.preventDefault();
-    let { data, error } = await supabase.auth.updateUser({
-      email: mail,
-      password: confirmPassword,
-    });
+        debugger
+        const mail = localStorage.getItem("Email");
+        event.preventDefault();
+        let { data, error } = await supabase.auth.updateUser({
+            email: mail,
+            password: confirmPassword,
+        });
 
-    if (newPassword !== confirmPassword) {
-      setMessage("Passwords do not match");
-    } else {
-      setMessage("Passwords match");
-      navigate("/signin");
-    }
-    if (error) {
-      console.log("something went wrong");
-      setErrorMessage("An error occurred. Please try again later.");
-    } else {
-      setSuccessMessage("Password updated successfully!");
-      navigate("/signin");
-    }
-  };
+        if (newPassword !== confirmPassword) {
+            setMessage("Passwords do not match");
+        } else {
+            setMessage("Passwords match");
+            setSuccessMessage("Password updated successfully!");
+            navigate("/signin");
+        }
+        if (error) {
+            console.log("something went wrong");
+            setErrorMessage("An error occurred. Please try again later.");
+        } 
+    };
 
   //password toggle
   const [showPassword, setShowPassword] = useState(false);
@@ -53,7 +51,11 @@ function Resetpassword() {
       setImageSource(eye);
       setShowPassword(!showPassword);
     }
-  };
+    };
+
+    //passwordvalidation
+    const [passwordError, setPasswordError] = useState('');
+
 
   return (
     <div className="login">
@@ -83,7 +85,7 @@ function Resetpassword() {
                 <img src={lockicon} className="login__form-icon" alt="icon" />
                 <input
                   value={newPassword}
-                  type="text"
+                  type="password"
                   placeholder="new password"
                   onChange={(e) => setNewPassword(e.target.value)}
                   id="newpassword"
@@ -108,11 +110,9 @@ function Resetpassword() {
                 />
               </div>
 
-              <div className="login__form-text">
-                <span>
-                  <p className="danger">{message}</p>
-                </span>
-              </div>
+                          <div className="login__form-text">
+                              <span>{message && <p className="danger">{message}</p>}</span>
+                          </div>
 
               <div className="login__form-links">
                 <button
