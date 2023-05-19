@@ -107,7 +107,6 @@ function Signin() {
     };
 
     useEffect(() => {
-        debugger
         const { data, error } = supabase.auth.getSession();
         console.log(data)
         
@@ -196,7 +195,7 @@ function Signin() {
                   type={showPassword ? "text" : "password"}
                   id="password"
                   placeholder="password"
-                />
+                /> 
               </div>
 
               {/* <!-- Row 3 --> */}

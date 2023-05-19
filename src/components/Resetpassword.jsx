@@ -62,7 +62,11 @@ function Resetpassword() {
       setImageSource(eye);
       setShowPassword(!showPassword);
     }
-  };
+    };
+
+    //passwordvalidation
+    const [passwordError, setPasswordError] = useState('');
+
 
 
   
@@ -142,11 +146,9 @@ function Resetpassword() {
                 />
               </div>
 
-              <div className="login__form-text">
-                <span>
-                  <p className="danger">{message}</p>
-                </span>
-              </div>
+                          <div className="login__form-text">
+                              <span>{message && <p className="danger">{message}</p>}</span>
+                          </div>
 
               <div className="login__form-links">
                 <button

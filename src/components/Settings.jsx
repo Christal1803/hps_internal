@@ -29,7 +29,7 @@ function Setting() {
 
   //page redirect function
   const Movetosettings = () => {
-    let path = `/dashboard`;
+    let path = `/settings`;
     navigate(path);
   };
 
@@ -38,7 +38,6 @@ function Setting() {
   const [user, setUser] = useState(null);
   const history = useNavigate();
   async function handleLogout() {
-    debugger;
     try {
       setLoading(true);
       await supabase.auth.signOut();
