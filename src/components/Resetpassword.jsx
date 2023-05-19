@@ -9,36 +9,47 @@ import { useState } from "react";
 import { supabase } from "../supabase";
 
 function Resetpassword() {
+  //page redirect function
   let navigate = useNavigate();
+  const MovetoSignin = () => {
+    let path = `/signin`;
+    navigate(path);
+  };
 
   //resetting password
+  debugger
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [message, setMessage] = useState("");
 
-    const handleChangePassword = async (event) => {
-        debugger
-        const mail = localStorage.getItem("Email");
-        event.preventDefault();
-        let { data, error } = await supabase.auth.updateUser({
-            email: mail,
-            password: confirmPassword,
-        });
+  const handleChangePassword = async (event) => {
+    const mail = localStorage.getItem("Email");
+    event.preventDefault();
+    let { data, error } = await supabase.auth.updateUser({
+      email: mail,
+      password: confirmPassword,
+    });
 
-        if (newPassword !== confirmPassword) {
-            setMessage("Passwords do not match");
-        } else {
-            setMessage("Passwords match");
-            setSuccessMessage("Password updated successfully!");
-            navigate("/signin");
-        }
-        if (error) {
-            console.log("something went wrong");
-            setErrorMessage("An error occurred. Please try again later.");
-        } 
-    };
+    if (newPassword !== confirmPassword) {
+      setMessage("Passwords do not match");
+      setNewPassword('');
+      setConfirmPassword('');
+    } else {
+      setMessage("Passwords match");
+      navigate("/signin");
+    }
+    if (error) {
+      console.log("something went wrong");
+      setErrorMessage("An error occurred. Please try again later.");
+    } else {
+      console.log(newPassword);
+      console.log(confirmPassword);
+      setSuccessMessage("Password updated successfully!");
+      navigate("/signin");
+    }
+  };
 
   //password toggle
   const [showPassword, setShowPassword] = useState(false);
@@ -57,6 +68,9 @@ function Resetpassword() {
     const [passwordError, setPasswordError] = useState('');
 
 
+
+  
+
   return (
     <div className="login">
       <main className="login__main">
@@ -73,6 +87,28 @@ function Resetpassword() {
         {/* <!-- ====== Content ====== --> */}
         <div className="login__main-content">
           <div className="login__card forgot-password-card">
+
+          <div className="login__card-header">
+              <a onClick={MovetoSignin}>
+                <svg
+                  width="10"
+                  height="18"
+                  viewBox="0 0 10 18"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M3.21532 8.99935L9.59286 15.6131C10.0141 16.0499 9.95715 16.7075 9.46575 17.0819C8.97435 17.4563 8.23455 17.4057 7.81335 16.9689L0.782121 9.67726C0.40596 9.28716 0.40596 8.71154 0.782121 8.32144L7.81335 1.02979C8.23455 0.592996 8.97435 0.542411 9.46575 0.916808C9.95715 1.29121 10.0141 1.94881 9.59286 2.38561L3.21532 8.99935Z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </a>
+            </div>
+
+
+
             <div className="card__heading">
               <img src={mailicon} alt="Mail icon" />
               <h5>Reset Password</h5>

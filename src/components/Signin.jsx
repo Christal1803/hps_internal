@@ -36,7 +36,7 @@ function Signin() {
                 prompt: 'select_account',
             },
             
-            redirectTo: "https://hpsstage.netlify.app/dashboard",
+            redirectTo: "http://localhost:3000/dashboard",
 
       },
     });
@@ -71,8 +71,14 @@ function Signin() {
       password: password,
     });
     if (error) {
-        console.log("Invaid Credentials");
-        setMessage(`Invalid credentials`);
+      debugger
+      console.log("Invaid Credentials");
+      setMessage(`Invalid credentials`);
+      setTimeout(() => {
+        setMessage('');
+      }, 1000);
+      setEmail('');
+      setPassword('');
     } else {
       let { data: Member, error } = await supabase
         .from("Member")
@@ -195,6 +201,7 @@ function Signin() {
               {/* <!-- Row 3 --> */}
 
               <div className="login__form-text">
+
                 <span>{message && <p className="danger">{message}</p>}</span>
               </div>
 

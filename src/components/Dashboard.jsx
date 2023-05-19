@@ -6,6 +6,8 @@ import crown from "../assets/images/dashboard/crown.svg";
 import logouticon from "../assets/images/dashboard/logout-icon.svg";
 import dotsicon from "../assets/images/dashboard/dots-icon.svg";
 import check from "../assets/images/dashboard/check.svg";
+import dark from "../assets/images/dashboard/dark.svg";
+import houseicon from "../assets/images/dashboard/house.svg";
 import reset from "../assets/images/dashboard/reset.svg";
 import ognisko from "../assets/images/dashboard/ognisko.png";
 import AppScript from "../assets/js/AppScript";
@@ -21,7 +23,6 @@ function Dashboard() {
         let path = `/newsfeed`;
         navigate(path);
     };
-
 
     const MovetoSettings = () => {
         let path = `/settings`;
@@ -134,9 +135,24 @@ function Dashboard() {
                 window.selectSchool = memberArray.map((element) => {
                     return (
                         //active
-                        <div class="select__slider-item " onClick={(e) => handleChangeSchool(element.school_name)}>
-                            <p >{element.school_name}</p>
-                        </div>
+
+                       
+                
+
+<li class="search__dropwdown-item">
+                                        <button
+                                            type="button"
+                                            class="search__dropwdown-link"
+                                            data-id="select-schools-modal" onClick={(e) => handleChangeSchool(element.school_name)}
+                                        >
+                                            <img
+                                                src={houseicon}
+                                                class="search__dropwdown-icon"
+                                                alt="house icon"
+                                            />
+                                            <span>{element.school_name}</span>
+                                        </button>
+                                    </li>
 
                     );
                 });
@@ -349,7 +365,7 @@ function Dashboard() {
                                 </li>
 
                                 <li class="sidebar__menu-item">
-                                    <a onClick={MovetoSettings } class="sidebar__menu-link">
+                                    <a onClick={MovetoSettings} class="sidebar__menu-link">
                                         <span class="sidebar__menu-icon">
                                             <svg
                                                 width="20"
@@ -388,7 +404,9 @@ function Dashboard() {
                 <main class="main-section">
                     {/* <!-- ================ Search Start ================== --> */}
                     <section class="search home-search">
-                        <h3>Houses</h3>
+                        <h3><a onClick={Movetohome} class="sidebar__menu-logo mobile-nav">
+                                <img src={logo} alt="Logo" />
+                            </a></h3>
                         <div class="search__dropwdown">
                             <button type="button" class="search__dropwdown-btn" onClick={AppScript}>
                                 <img src={dotsicon} alt="Dots icon" />
@@ -422,21 +440,6 @@ function Dashboard() {
                                         <button
                                             type="button"
                                             class="search__dropwdown-link"
-                                            data-id="select-schools-modal" onClick={IndexScript}
-                                        >
-                                            <img
-                                                src={check}
-                                                class="search__dropwdown-icon"
-                                                alt="Check icon"
-                                            />
-                                            <span>Select schools</span>
-                                        </button>
-                                    </li>
-
-                                    <li class="search__dropwdown-item">
-                                        <button
-                                            type="button"
-                                            class="search__dropwdown-link"
                                             data-id="multi-points-modal" onClick={IndexScript}
                                         >
                                             <img
@@ -449,20 +452,47 @@ function Dashboard() {
                                     </li>
 
 
-
-
                                     <li class="search__dropwdown-item">
                                         <button
                                             type="button"
                                             class="search__dropwdown-link"
-                                            data-id="reset-points-modal"
+                                            data-id="reset-houses-modal" onClick={IndexScript}
                                         >
                                             <img
                                                 src={reset}
                                                 class="search__dropwdown-icon"
                                                 alt="Reset icon"
+                                                
                                             />
                                             <span>Reset House Points</span>
+                                        </button>
+                                    </li>
+
+                                    <li class="search__dropwdown-item">
+                                        <button
+                                            type="button"
+                                            class="search__dropwdown-link"
+                                            data-id="select-schools-modal" onClick={IndexScript}
+                                        >
+                                            <img
+                                                src={dark}
+                                                class="search__dropwdown-icon"
+                                                alt="dark mode icon"
+                                            />
+                                            <span>Switch to Dark Mode</span>
+                                        </button>
+                                    </li>
+
+                                    <hr/>
+
+                                    <li class="search__dropwdown-item">
+                                        <button
+                                            type="button"
+                                            class="search__dropwdown-link"
+                                            data-id="select-schools-modal" onClick={IndexScript}
+                                        >
+                                           
+                                            <span>{window.selectSchool}</span>
                                         </button>
                                     </li>
                                 </ul>
@@ -744,19 +774,15 @@ function Dashboard() {
                 {/* <!-- ================ Ognisko Modal Start ================== --> */}
 
 
-                {/* <!-- ================ Select schools Modal Start ================== --> */}
-                <div class="backdrop select-schools-modal">
+                {/* <!-- ================ reset-houses-modal  Start ================== --> */}
+                <div class="backdrop reset-houses-modal">
                     <div class="modal">
                         <div class="modal__header">
-                            <img
-                                src={ognisko}
-                                class="modal__header-image"
-                                alt="ognisko image"
-                            />
+                            
                             <button
                                 type="button"
                                 class="modal__header-btn"
-                                data-toggle="select-schools-modal"
+                                data-toggle="reset-houses-modal"
                             >
                                 <svg
                                     width="20"
@@ -776,24 +802,14 @@ function Dashboard() {
                         </div>
                         <div class="modal__body">
                             <div class="points__current">
-                                <h2 class="text-center">Select School</h2>
+                                <h4 class="text-center">Are you sure you really want to reset your house points ?</h4>
                             </div>
 
                             <form class="addpoints">
-                                <div class="addpoints__tabs">
-                                    <div class="addpoints__tabs-content">
-                                        <div class="addpoints__tabs-tab ognisko-add-points-tab active ognisko-tab-content">
-                                            <div class="select__slider-container no-scrollbar">
-                                                <div class="select__slider">
-
-                                                    {window.selectSchool}
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
+                            <button type="submit" class="btn">Yes</button>
+                            <br>
+                            </br>
+                            <button type="submit" class="btn">No</button>
 
                             </form>
                         </div>
