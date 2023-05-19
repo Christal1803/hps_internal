@@ -15,6 +15,28 @@ import IndexScript from "../assets/js/IndexScript";
 import { supabase } from "../supabase";
 
 function Dashboard() {
+
+    //reset house
+
+    async function ResetHouses() {
+        try {
+
+            const { data, error } = await supabase
+              .from('House')
+              .update({ total_points: 0 })
+              .eq('active', 'TRUE');
+        
+            if (error) {
+              console.error('Error updating data:', error);
+            } else {
+              console.log('Data updated successfully:', data);
+            }
+          } catch (error) {
+            console.error('An error occurred:', error);
+          }
+    }
+
+
     const [user, setUser] = useState('')
     const [house, setHouse] = useState('');
     //page redirect function
@@ -304,6 +326,10 @@ function Dashboard() {
             setLoading(false);
         }
     }
+
+
+
+    
 
 
     return (
@@ -806,10 +832,10 @@ function Dashboard() {
                             </div>
 
                             <form class="addpoints">
-                            <button type="submit" class="btn">Yes</button>
+                            <p class="btn" onClick={ResetHouses}>Yes</p>
                             <br>
                             </br>
-                            <button type="submit" class="btn">No</button>
+                            <p  class="btn">No</p>
 
                             </form>
                         </div>
