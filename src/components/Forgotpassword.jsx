@@ -4,6 +4,7 @@ import mailicon from "../assets/images/auth/mail-icon.svg";
 import envelopeicon from "../assets/images/auth/envelope-icon.svg";
 import logo from "../assets/images/auth/logo.svg";
 import { supabase } from "../supabase";
+import PageLoader from "./PageLoader";
 
 function Forgotpassword() {
   //page redirect function
@@ -17,13 +18,16 @@ function Forgotpassword() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [pageLoading, setPageLoading] = useState(false);
   async function handlePasswordRecovery(event) {
     localStorage.setItem("Email", email);
     event.preventDefault();
     try {
       setLoading(true);
+      setPageLoading(true)
       let { data, error } = await supabase.auth.resetPasswordForEmail(email);
       setMessage(`Password recovery email sent to ${email}.`);
+      setPageLoading(false)
       console.log(data, error);
     } catch (error) {
       console.error("Password recovery failed:", error);
@@ -35,6 +39,7 @@ function Forgotpassword() {
 
   return (
     <div className="login">
+      {pageLoading ? <PageLoader/>:''}
       <main className="login__main">
         {/* <!-- ====== Logo ====== --> */}
         <div className="login__brand forgot-password-brand">
