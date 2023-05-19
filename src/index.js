@@ -27,7 +27,7 @@ root.render(
           <Route path="/" element={<AuthRoute />}>
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="newsfeed" element={<Newsfeed />} />
-          <Route path="settings" element={<Setting />} />
+             <Route path="settings" element={<Setting />} />
           </Route>
         </Routes>
       </AuthProvider>

@@ -70,7 +70,7 @@ function Forgotpassword() {
 
             <div className="card__heading">
               <img src={mailicon} alt="Mail icon" />
-              <h5>Forgot Password / School ID</h5>
+              <h5>Forgot Password</h5>
               <p>Enter your email below to reset</p>
             </div>
 
@@ -190,3 +190,9 @@ function Forgotpassword() {
 }
 
 export default Forgotpassword;
+
+
+
+
+
+

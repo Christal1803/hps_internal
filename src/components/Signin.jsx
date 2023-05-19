@@ -36,7 +36,7 @@ function Signin() {
                 prompt: 'select_account',
             },
             
-            redirectTo: "https://hps.addant.com/dashboard",
+            redirectTo: "http://localhost:3000/dashboard",
 
       },
     });
@@ -71,7 +71,14 @@ function Signin() {
       password: password,
     });
     if (error) {
+      debugger
       console.log("Invaid Credentials");
+      setMessage(`Invalid credentials`);
+      setTimeout(() => {
+        setMessage('');
+      }, 1000);
+      setEmail('');
+      setPassword('');
     } else {
       let { data: Member, error } = await supabase
         .from("Member")
@@ -195,12 +202,13 @@ function Signin() {
               {/* <!-- Row 3 --> */}
 
               <div className="login__form-text">
+
                 <span>{message && <p className="danger">{message}</p>}</span>
               </div>
 
               <div className="login__form-links">
                 <a onClick={MovetoForgotpassword} className="login__form-link">
-                  Forgot Password or School ID
+                  Forgot Password
                 </a>
                 <button
                   type="submit"

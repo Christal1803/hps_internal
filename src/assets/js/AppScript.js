@@ -11,6 +11,7 @@ const dropdownOverlay = document.querySelector('.dropdown-backdrop');
 const dropdownLinks = document.querySelectorAll('.search__dropwdown-link');
 
 dropdownBtn.addEventListener('click', () => {
+  
     dropdown.classList.toggle('show');
     dropdownOverlay.classList.toggle('show');
 });
@@ -22,12 +23,23 @@ dropdownCloseBtn.addEventListener('click', () => {
     }, 200);
 });
 
-dropdownLinks.forEach(link => {
-    link.addEventListener('click', () => {
+dropdownOverlay.addEventListener('click', () => {
+    dropdown.classList.remove('show');
+    setTimeout(() => {
         dropdownOverlay.classList.remove('show');
-        dropdown.classList.remove('show');
-    });
-})
+    }, 200);
+});
+
+// dropdownLinks.forEach(link => {
+//     link.addEventListener('click', () => {
+//         dropdownOverlay.classList.remove('show');
+//         dropdown.classList.remove('show');
+//     });
+// });
+
+
+
+
 
 // Dark & Light Mode
 const circleToggle = document.querySelector('#dark-light-mode');
