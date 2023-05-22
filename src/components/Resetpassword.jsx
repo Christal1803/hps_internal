@@ -26,33 +26,37 @@ function Resetpassword() {
   const [message, setMessage] = useState("");
   const [pageLoading, setPageLoading] = useState(false);
 
+
   const handleChangePassword = async (event) => {
+    debugger
     const mail = localStorage.getItem("Email");
     event.preventDefault();
-    setPageLoading(true)
     let { data, error } = await supabase.auth.updateUser({
-      email: mail,
-      password: confirmPassword,
+        email: mail,
+        password: confirmPassword,
     });
-    setPageLoading(false)
+
     if (newPassword !== confirmPassword) {
-      setMessage("Passwords do not match");
-      setNewPassword('');
-      setConfirmPassword('');
+        setMessage("Passwords do not match");
+        setTimeout(() => {
+          setMessage('');
+        }, 1000);
+        setNewPassword('');
+        setConfirmPassword('');
     } else {
-      setMessage("Passwords match");
-      navigate("/signin");
+        setMessage("Passwords match");
+        setSuccessMessage("Password updated successfully!");
+        setPageLoading(true)
+        navigate("/signin");
     }
     if (error) {
-      console.log("something went wrong");
-      setErrorMessage("An error occurred. Please try again later.");
-    } else {
-      console.log(newPassword);
-      console.log(confirmPassword);
-      setSuccessMessage("Password updated successfully!");
-      navigate("/signin");
-    }
-  };
+        console.log("something went wrong");
+        setErrorMessage("An error occurred. Please try again later.");
+    } 
+};
+
+
+
 
   //password toggle
   const [showPassword, setShowPassword] = useState(false);
